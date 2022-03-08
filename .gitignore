@@ -1,0 +1,4 @@
+*.exe
+exe/
+data/
+__pychache__
