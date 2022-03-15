@@ -3,3 +3,4 @@ exe/
 data/
 __pycache__/
 build/
+executable
