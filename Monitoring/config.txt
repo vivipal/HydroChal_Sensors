@@ -1,0 +1,18 @@
+# IMU ##
+# device:
+/dev/ttyUSB0
+# path to save:
+../data
+# Logger ##
+# binary data path:
+../data
+# path to save log:
+../log
+# RX ##
+# device path
+/dev/ttyUSB2
+# WS ##
+# device:
+/dev/ttyUSB1
+# path to save:
+../data
