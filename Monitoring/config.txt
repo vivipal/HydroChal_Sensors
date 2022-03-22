@@ -2,12 +2,12 @@
 # device:
 /dev/ttyUSB0
 # path to save:
-../data
+../data/
 # Logger ##
 # binary data path:
-../data
+../data/
 # path to save log:
-../log
+../log/
 # RX ##
 # device path
 /dev/ttyUSB2
@@ -15,4 +15,4 @@
 # device:
 /dev/ttyUSB1
 # path to save:
-../data
+../data/

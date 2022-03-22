@@ -23,16 +23,19 @@ done < config.txt
 # WS path to save
 
 
+
+
 while true
 do
-pgrep -x IMU_exe > /dev/null  && echo "IMU_exe found\n" || (echo "IMU_exe not found\n" && ../executable/IMU_exe $arr[0] $arr[1] >/dev/null&)
-echo "\n"
-pgrep -x logger_exe  > /dev/null && echo  "logger_exe found\n" || (echo "logger_exe not found\n" && ../executable/logger_exe $arr[2] $arr[3] >/dev/null&)
-echo "\n"
-pgrep -x rx_exe  > /dev/null && echo  "rx_exe found\n" || (echo "rx_exe not found\n" && ../executable/rx_exe $arr[4]>/dev/null&)
-echo  "\n"
-pgrep -x WS_exe > /dev/null  && echo  "WS_exe found\n" || (echo "WS_exe not found\n" && ../executable/WS_exe $arr[5] $arr[6] >/dev/null&)
-echo "\n"
+
+
+pgrep -x IMU_exe > /dev/null  && echo -e "IMU_exe found" || (echo -e "IMU_exe not found" && ../executable/IMU_exe ${arr[0]} ${arr[1]} >/dev/null&)
+pgrep -x logger_exe  > /dev/null && echo -e  "logger_exe found" || (echo -e "logger_exe not found" && ../executable/logger_exe ${arr[2]} ${arr[3]} >/dev/null&)
+pgrep -x rx_exe  > /dev/null && echo -e  "rx_exe found" || (echo -e "rx_exe not found" && ../executable/rx_exe ${arr[4]} > /dev/null&)
+pgrep -x WS_exe > /dev/null  && echo -e  "WS_exe found" || (echo -e "WS_exe not found" && ../executable/WS_exe ${arr[5]} ${arr[6]} >/dev/null&)
+
+
+echo -e "\n"
 
 sleep 2
 done
