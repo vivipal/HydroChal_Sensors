@@ -5,9 +5,8 @@ This code uses https://github.com/Carbon225/raspberry-sbus
 
 # How to run
 
-compile with cmake and run ./build/main
+compile with cmake and run :
 
-
-#TO DO
-
-save new received datas to bin file 
+```console
+./build/main /dev/[your_device(sbus)] [path_to_save_the_binary_file]
+```

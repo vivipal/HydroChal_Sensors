@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <chrono>
 #include "SBUS.h"
 
@@ -9,6 +10,8 @@ using std::cin;
 using std::string;
 using std::chrono::steady_clock;
 using std::chrono::milliseconds;
+using std::ofstream;
+using std::ios;
 
 static SBUS sbus;
 
@@ -38,14 +41,17 @@ int main(int argc, char **argv)
     cout << "SBUS blocking receiver example" << endl;
 
     string ttyPath;
+    string savingPath;
 
-    if (argc > 1)
+    if (argc == 3){
         ttyPath = argv[1];
-    else
-    {
-        cout << "Enter tty path: ";
-        cin >> ttyPath;
+        savingPath = argv[2];
+    }else{
+      std::cout << "Please enter device path and path to save the data" << '\n';
+      return 0;
     }
+    string rudder_filename = savingPath + "/rudder.bin";
+    string flap_filename = savingPath + "/flap.bin";
 
     sbus.onPacket(onPacket);
 
@@ -58,16 +64,26 @@ int main(int argc, char **argv)
 
     cout << "SBUS installed" << endl;
 
+
     // blocks until data is available
     while ((err = sbus.read()) != SBUS_FAIL)
     {
 
-        std::cout << " flap : " << data.flap << "\n rudder : " << data.rudder  << "\n\n";
-        // desync means a packet was misaligned and not received properly
-        if (err == SBUS_ERR_DESYNC)
-        {
-            cerr << "SBUS desync" << endl;
-        }
+      ofstream rudder_file("rudder.bin", ios::out | ios::binary);
+      rudder_file.write(reinterpret_cast<const char *>(&data.rudder), sizeof(data.rudder));
+      rudder_file.close();
+
+      ofstream flap_file("flap.bin", ios::out | ios::binary);
+      flap_file.write(reinterpret_cast<const char *>(&data.flap), sizeof(data.flap));
+      flap_file.close();
+
+      std::cout << " flap : " << data.flap << "\n rudder : " << data.rudder  << "\n\n";
+
+      // desync means a packet was misaligned and not received properly
+      if (err == SBUS_ERR_DESYNC)
+      {
+        cerr << "SBUS desync" << endl;
+      }
     }
 
     cerr << "SBUS error: " << err << endl;
