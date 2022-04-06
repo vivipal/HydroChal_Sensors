@@ -7,33 +7,41 @@
 #include <unistd.h>
 
 
-// please enter here the list of all the data file you want to save
-char* data_files[] = {"IMU.bin","WIMDA.bin","HCHDG.bin","GPRMC.bin"};
-int len = sizeof(data_files)/sizeof(data_files[0]);
 
 int main(int argc, char const *argv[]){
 
-  printf("%d\n",len );
 
-  if (argc!=3){
-    printf("Please enter sensor data directory and path to save log\n");
+  if (argc<3){
+    printf("Please enter path to save log and at least one sensor data file \n");
     return 0;
   }
 
+  const int len_argc = argc ;
 
 
-  char *data_path = malloc(50);
   char *saving_path = malloc(50);
+  strcpy(saving_path, argv[1]);
 
-  strcpy(data_path, argv[1]);
-  strcpy(saving_path, argv[2]);
+  int len = len_argc - 2;
+
+  char* data_files[len];
+  for (int i = 0; i < len; i++) {
+    data_files[i] = (char*) argv[i+2];
+  }
+
+
+  printf(" number of files : %d\n",len );
+
+  for (size_t i = 0; i < len; i++) {
+    printf("%s\n", data_files[i]);
+  }
+
 
 
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
   char s[64];
   strftime(s, sizeof(s), "%F__%H-%M-%S", tm);
-  // strftime(s, sizeof(s), "%c", tm);
 
 
 
@@ -47,11 +55,16 @@ int main(int argc, char const *argv[]){
   FILE *logptr;
   logptr = fopen(logname,"w");
 
+
+
   if (logptr==NULL){
     return 0;
   }
 
-
+  for (int i = 0; i < len; i++) {
+    fprintf(logptr,"%s  ", data_files[i]);
+  }
+  fprintf(logptr, "\n");
 
   while (1){
 
@@ -65,9 +78,7 @@ int main(int argc, char const *argv[]){
 
     for (int i = 0; i < len; i++) {
       FILE * fptr;
-      char * filename  = malloc(50);
-      strcat(filename,data_path);
-      strcat(filename,data_files[i]);
+      char * filename  = data_files[i];
       fptr = fopen(filename,"rb");
 
       if (fptr==NULL){
@@ -89,8 +100,6 @@ int main(int argc, char const *argv[]){
           }
         }
       }
-
-      free(filename);
 
     }
     fprintf(logptr, "\n");
