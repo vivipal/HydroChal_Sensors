@@ -12,6 +12,10 @@ cd HydroChal_Sensors
 mkdir build
 cmake -B build
 cmake --build build
-
-# all the executable are in ./executable/
 ```
+
+All the executable are in ./executable/
+
+You can launch every executable one by one or use the script monitor.bash in ./Monitoring  
+
+If you are using monitor.bash ensure that the config.txt file is correct.
