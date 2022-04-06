@@ -11,6 +11,8 @@
 # RX ##
 # device path
 /dev/ttyUSB2
+# path to save:
+../data/
 # WS ##
 # device:
 /dev/ttyUSB1
