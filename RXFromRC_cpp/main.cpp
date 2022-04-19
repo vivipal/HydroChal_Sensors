@@ -69,11 +69,11 @@ int main(int argc, char **argv)
     while ((err = sbus.read()) != SBUS_FAIL)
     {
 
-      ofstream rudder_file("rudder.bin", ios::out | ios::binary);
+      ofstream rudder_file(rudder_filename, ios::out | ios::binary);
       rudder_file.write(reinterpret_cast<const char *>(&data.rudder), sizeof(data.rudder));
       rudder_file.close();
 
-      ofstream flap_file("flap.bin", ios::out | ios::binary);
+      ofstream flap_file(flap_filename, ios::out | ios::binary);
       flap_file.write(reinterpret_cast<const char *>(&data.flap), sizeof(data.flap));
       flap_file.close();
 
